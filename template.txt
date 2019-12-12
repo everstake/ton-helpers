@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Line Chart</title>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	</head>
+	<body>
+		<h1 style="text-align: center;">Validation stats</h1>
+		<div id="chart_div" style="width: 100%; height: 500px;"></div>
+		<script>
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = new google.visualization.DataTable();
+				data.addColumn('datetime');
+				data.addColumn('number', 'reward');
+				data.addColumn({'type': 'string', 'role': 'annotation', 'p': {'html': true}});
+				data.addColumn('number', 'blocks');
+				data.addRows([
+					${Variable}
+				]);
+			var options = {
+			// chartArea: {
+			//         backgroundColor: 'white'
+			//     },
+			focusTarget: 'category',
+			annotations: {
+				alwaysOutside: true,
+				textStyle: {
+				fontName: 'Times-Roman',
+				fontSize: 12,
+				//bold: true,
+				//italic: true,
+				color: 'black',
+				//auraColor: '#d799ae',
+				opacity: 0.7
+			}
+			},
+			series: {
+						0: {targetAxisIndex: 0,
+							type: 'bars',
+						},
+						1: {targetAxisIndex: 1,
+							type: 'bars',
+							color: '#ff9696',
+						}
+					},
+			vAxes: {
+						// Adds titles to each axis.
+						1: {title: 'Blocks'},
+						0: {title: 'Rewards (Gram)'}
+					},
+				hAxis: {
+				//title: 'Time of Day',
+				//format: 'h:mm'
+				//formatValue: 'd, H:m'
+				// viewWindow: {
+				//   min: [7, 30, 0],
+				//   max: [17, 30, 0]
+				// }
+				},
+				vAxis: {
+					// minValue: 0,
+					// maxValue: 100
+					titleTextStyle: {
+						color: '#1a237e',
+						fontSize: 24,
+						bold: true
+					}
+				},
+		};
+			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+		</script>
+	</body>
+</html>
